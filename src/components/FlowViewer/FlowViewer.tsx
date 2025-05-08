@@ -37,7 +37,7 @@ export function FlowViewer() {
   );
 
   return (
-    <div className="w-1/2 h-full">
+    <div className="w-full h-full bg-red-100">
       <ReactFlow
         nodes={nodes}
         edges={edges}
