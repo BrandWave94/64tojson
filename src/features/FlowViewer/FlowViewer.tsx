@@ -1,14 +1,13 @@
 import { useCallback } from "react";
 import {
   ReactFlow,
-  MiniMap,
   Controls,
   Background,
   useNodesState,
   useEdgesState,
   addEdge,
 } from "@xyflow/react";
-import CustomeNode from "../CustomeNode";
+import { CustomeNode } from "../../components";
 
 import "@xyflow/react/dist/style.css";
 
@@ -19,9 +18,23 @@ const initialNodes = [
     position: { x: 0, y: 0 },
     data: { label: "1" },
   },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
+  {
+    id: "2",
+    type: "customeNode",
+    position: { x: 100, y: 20 },
+    data: { label: "2" },
+  },
+  {
+    id: "3",
+    type: "customeNode",
+    position: { x: 100, y: 100 },
+    data: { label: "3" },
+  },
 ];
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges = [
+  { id: "e1-2", source: "1", target: "2", type: "step" },
+  { id: "e1-3", source: "1", target: "3", type: "step" },
+];
 
 const nodeTypes = {
   customeNode: CustomeNode,
@@ -37,7 +50,7 @@ export function FlowViewer() {
   );
 
   return (
-    <div className="w-full h-full bg-red-100">
+    <div className="w-full h-full bg-[#1E1E1E]">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -47,7 +60,6 @@ export function FlowViewer() {
         nodeTypes={nodeTypes}
       >
         <Controls />
-        <MiniMap />
         <Background variant="dots" gap={12} size={1} />
       </ReactFlow>
     </div>

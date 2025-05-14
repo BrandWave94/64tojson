@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import clsx from "clsx";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import IconButton from "../IconButton";
+import { IconButton } from "../IconButton/IconButton";
 import { PxString } from "../../types/baseTypes";
 
 // #region ---------------- Types --------------------
@@ -15,7 +15,11 @@ interface VerticalCollapseProps {
 
 // #region  -------------------- Styles --------------------
 const collapsedStyles =
-  "h-full transition-[width] duration-300 overflow-hidden bg-gray-500";
+  "h-full transition-[width] duration-300 overflow-hidden bg-[#2C2C2C]";
+// #endregion
+
+// #region -------------------- COLLAPSE CONTEXT --------------------
+// This context is used to share the state of the collapse between components
 const CollapseContext = createContext<{ isOpen: boolean }>({ isOpen: false });
 // #endregion
 
@@ -27,8 +31,8 @@ const CollapseContent: React.FC<{ children: React.ReactNode }> = ({
   const { isOpen } = useContext(CollapseContext);
 
   const classContent = clsx(
-    "text-gray-600 transition-all duration-400 bg-red-300 overflow-hidden",
-    isOpen ? "opacity-100 max-h-96" : "opacity-0 max-h-0"
+    "h-full text-gray-600 transition-all duration-300 overflow-hidden",
+    isOpen ? "opacity-100" : "opacity-0"
   );
 
   return <div className={classContent}>{children}</div>;
@@ -45,8 +49,15 @@ const CollapseToggle: React.FC<{ onChange: () => void }> = ({ onChange }) => {
       onClick={() => {
         onChange();
       }}
+      ariaLabel="Toggle collapse panel"
+      className="p-0"
+      variant="transparent"
     >
-      {isOpen ? <ChevronLeft /> : <ChevronRight />}
+      {isOpen ? (
+        <ChevronLeft color="#00E673" size={30} />
+      ) : (
+        <ChevronRight color="#00E673" size={30} />
+      )}
     </IconButton>
   );
 };
@@ -57,7 +68,7 @@ const CollapseToggle: React.FC<{ onChange: () => void }> = ({ onChange }) => {
 export const VerticalCollapse: React.FC<VerticalCollapseProps> & {
   Content: typeof CollapseContent;
   Toggle: typeof CollapseToggle;
-} = ({ isOpen, minWidth = "45px", maxWidth = "500px", children }) => {
+} = ({ isOpen, minWidth = "50px", maxWidth = "500px", children }) => {
   const panelStyle = { width: isOpen ? maxWidth : minWidth };
 
   return (

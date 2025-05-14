@@ -1,5 +1,5 @@
 import { useState } from "react";
-import VerticalCollapse from "../VerticalCollapse";
+import { Button, TextArea, VerticalCollapse } from "../../components";
 
 interface InputPanel {
   isOpen: boolean;
@@ -12,7 +12,14 @@ export const InputPanel = () => {
     <VerticalCollapse isOpen={isOpen}>
       <VerticalCollapse.Toggle onChange={() => setIsOpen(!isOpen)} />
       <VerticalCollapse.Content>
-        <p className="text-white">Hereee</p>
+        <div className="h-full w-full flex flex-col">
+          <div className="p-4 min-w-28 h-full">
+            <TextArea placeholder="Type here..." />
+          </div>
+          <div className="flex justify-end p-5 pt-0">
+            <Button>Send</Button>
+          </div>
+        </div>
       </VerticalCollapse.Content>
     </VerticalCollapse>
   );
